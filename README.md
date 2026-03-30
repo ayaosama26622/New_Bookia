@@ -1,5 +1,4 @@
-<img width="364" height="776" alt="image" src="https://github.com/user-attachments/assets/8315fe09-8681-4699-9449-d1c76c7e1db4" /># 📚 Bookia - Book Store App
-
+# 📚 Bookia - Book Store App
 A full-featured book store mobile application built with Flutter.
 
 ---
@@ -84,6 +83,8 @@ A full-featured book store mobile application built with Flutter.
 
 
 <img width="360" height="778" alt="image" src="https://github.com/user-attachments/assets/7d349a65-e558-4a99-b0e8-93645aaeabc7" />
+<img width="364" height="776" alt="image" src="https://github.com/user-attachments/assets/8315fe09-8681-4699-9449-d1c76c7e1db4" />
+
 <img width="364" height="776" alt="image" src="https://github.com/user-attachments/assets/b137ae92-07ee-4e18-84db-709654fff755" />
 
 
