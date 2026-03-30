@@ -29,7 +29,7 @@ A full-featured book store mobile application built with Flutter.
 ## Screens
 
 
-==================================================================Authentication====================================================================================
+==================================Authentication================================
 <img width="367" height="775" alt="image" src="https://github.com/user-attachments/assets/c38ad07b-6c42-4ed8-98f1-24dd18dea775" />
 <img width="365" height="781" alt="image" src="https://github.com/user-attachments/assets/90f4bbaf-a07e-462e-a94d-7fee13068b82" />
 <img width="365" height="780" alt="image" src="https://github.com/user-attachments/assets/fc91c7c5-f41d-43cc-9778-0574d2fd6d7f" />
