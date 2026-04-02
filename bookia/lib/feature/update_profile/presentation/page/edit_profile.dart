@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:bookia/core/constants/image_app.dart';
 import 'package:bookia/core/function/navigation.dart';
 import 'package:bookia/core/routes/routes.dart';
@@ -8,6 +9,7 @@ import 'package:bookia/core/widgets/main_button.dart';
 import 'package:bookia/feature/update_profile/presentation/cubit/edit_profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:gap/gap.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -21,6 +23,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final _fullNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
+  File? _selectedImage;
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final picked = await picker.pickImage(source: ImageSource.gallery);
+    if (picked != null) {
+      setState(() {
+        _selectedImage = File(picked.path);
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -40,9 +53,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             pushTo(context, Routes.congrats);
           }
           if (state is UpdateProfileErrorState) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.message)));
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message)),
+            );
           }
         },
         child: Scaffold(
@@ -64,22 +77,31 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Stack(
-                    alignment: Alignment.bottomRight,
-                    children: [
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundColor: Colors.grey[300],
-                      ),
-                      CircleAvatar(
-                        radius: 15,
-                        backgroundColor: Colors.white,
-                        child: IconButton(
-                          icon: CustomSvgPicture(path: AppImage.camera),
-                          onPressed: () {},
+                  GestureDetector(
+                    onTap: _pickImage,
+                    child: Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        CircleAvatar(
+                          radius: 50,
+                          backgroundColor: Colors.grey[300],
+                          backgroundImage: _selectedImage != null
+                              ? FileImage(_selectedImage!)
+                              : null,
+                          child: _selectedImage == null
+                              ? const Icon(Icons.person, size: 50, color: Colors.white)
+                              : null,
                         ),
-                      ),
-                    ],
+                        CircleAvatar(
+                          radius: 15,
+                          backgroundColor: Colors.white,
+                          child: IconButton(
+                            icon: CustomSvgPicture(path: AppImage.camera),
+                            onPressed: _pickImage,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 60),
                   CustomTextFromField(
@@ -137,10 +159,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ? () {}
                       : () {
                           context.read<UpdateProfileCubit>().updateProfile(
-                            name: _fullNameController.text,
-                            phone: _phoneController.text,
-                            address: _emailController.text,
-                          );
+                                name: _fullNameController.text,
+                                phone: _phoneController.text,
+                                address: _emailController.text,
+                              );
                         },
                   text: state is UpdateProfileLoadingState
                       ? 'Loading...'

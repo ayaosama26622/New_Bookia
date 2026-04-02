@@ -5,12 +5,16 @@ import 'package:bookia/feature/book_details_screen/presentation/page/book_detail
 import 'package:bookia/feature/cart/presentation/cubit/cart_cubit.dart';
 import 'package:bookia/feature/cart/presentation/page/cart_screen.dart';
 import 'package:bookia/feature/congrats/congrats_screen.dart';
+import 'package:bookia/feature/create_new_password/page/create_password.dart';
+import 'package:bookia/feature/forget_password/page/forget_password.dart';
 import 'package:bookia/feature/home/data/models/best_seller_books_respons/product.dart';
 import 'package:bookia/feature/home/presentation/page/home_screen.dart';
 import 'package:bookia/feature/intro/splash/splash_screen.dart';
 import 'package:bookia/feature/intro/welcome/welcome_screen.dart';
 import 'package:bookia/feature/main/main_app_screen.dart';
 import 'package:bookia/feature/order_history/presentation/page/order_history_screen.dart';
+import 'package:bookia/feature/otp_screen.dart/page/otp_verification.dart';
+import 'package:bookia/feature/password_changed/page/password_changed.dart';
 import 'package:bookia/feature/place_order/presentation/page/place_order.dart';
 import 'package:bookia/feature/profile/presentation/page/profile_screen.dart';
 import 'package:bookia/feature/search/presentation/page/search_screen.dart';
@@ -95,6 +99,23 @@ class AppRoutes {
         path: Routes.orderHistory,
         builder: (context, state) => const OrderHistoryScreen(),
       ),
+      GoRoute(
+        path: Routes.forget,
+        builder: (context, state) => const ForgetPassword(),
+      ),
+      GoRoute(
+        path: Routes.check,
+        builder: (context, state) => const OtpVerification(),
+      ),
+      GoRoute(
+        path: Routes.resetPassword,
+        builder: (context, state) => const CreatePassword(),
+      ),
+      GoRoute(
+        path: Routes.PasswordChanged,
+        builder: (context, state) => const PasswordChangedScreen(),
+      ),
+
     ],
   );
 }
