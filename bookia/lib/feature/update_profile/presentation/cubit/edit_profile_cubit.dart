@@ -13,20 +13,15 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
   }) async {
     emit(UpdateProfileLoadingState());
 
-    var data = await UpdateProfileRepo.updateProfile(
+    var response = await UpdateProfileRepo.updateProfile(
       name: name,
       phone: phone,
       address: address,
     );
 
-    if (data != null && data.status == 200) {
-      emit(UpdateProfileSuccessState());
-    } else {
-      emit(
-        UpdateProfileErrorState(
-          message: data?.message ?? "Something went wrong",
-        ),
-      );
-    }
+    response.fold(
+      (l) => emit(UpdateProfileErrorState(message: l.message)),
+      (r) => emit(UpdateProfileSuccessState()),
+    );
   }
 }

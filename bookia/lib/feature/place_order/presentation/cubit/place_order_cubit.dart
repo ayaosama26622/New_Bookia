@@ -10,13 +10,16 @@ class PlaceOrderCubit extends Cubit<PlaceOrderState> {
 
   Future<void> getGovernorates() async {
     emit(GovernoratesLoadingState());
-    var data = await PlaceOrderRepo.getGovernorates();
-    if (data != null && data.data != null) {
-      governorates = data.data ?? [];
-      emit(GovernoratesSuccessState());
-    } else {
-      emit(GovernoratesErrorState());
-    }
+    var response = await PlaceOrderRepo.getGovernorates();
+    response.fold(
+      (l) {
+        emit(GovernoratesErrorState());
+      },
+      (r) {
+        governorates = r.data ?? [];
+        emit(GovernoratesSuccessState());
+      },
+    );
   }
 
   Future<void> placeOrder({
@@ -27,17 +30,20 @@ class PlaceOrderCubit extends Cubit<PlaceOrderState> {
     required String email,
   }) async {
     emit(PlaceOrderLoadingState());
-    var success = await PlaceOrderRepo.placeOrder(
+    var response = await PlaceOrderRepo.placeOrder(
       governorateId: governorateId,
       name: name,
       phone: phone,
       address: address,
       email: email,
     );
-    if (success) {
-      emit(PlaceOrderSuccessState());
-    } else {
-      emit(PlaceOrderErrorState(message: "Something went wrong"));
-    }
+    response.fold(
+      (l) {
+        emit(PlaceOrderErrorState(message: l.message));
+      },
+      (r) {
+        emit(PlaceOrderSuccessState());
+      },
+    );
   }
 }

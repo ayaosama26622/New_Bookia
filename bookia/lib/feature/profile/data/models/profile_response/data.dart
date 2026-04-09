@@ -1,4 +1,4 @@
-class UserProfile {
+class Data {
   int? id;
   String? name;
   String? email;
@@ -8,7 +8,7 @@ class UserProfile {
   bool? emailVerified;
   String? image;
 
-  UserProfile({
+  Data({
     this.id,
     this.name,
     this.email,
@@ -19,7 +19,7 @@ class UserProfile {
     this.image,
   });
 
-  factory UserProfile.fromJson(Map<String, dynamic> json) => UserProfile(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
     id: json['id'] as int?,
     name: json['name'] as String?,
     email: json['email'] as String?,

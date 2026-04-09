@@ -1,11 +1,11 @@
-class RegisterParemeter {
+class AuthParams {
   String? name;
   String? email;
   String? password;
   String? passwordConfirmation;
-  String? otp;
+  final String? otp;
 
-  RegisterParemeter({
+  AuthParams({
     this.name,
     this.email,
     this.password,
@@ -18,17 +18,10 @@ class RegisterParemeter {
     'email': email,
     'password': password,
     'password_confirmation': passwordConfirmation,
-    "otp": otp,
   };
 
   @override
   String toString() {
-    return '''
-name: $name
-email: $email
-password: $password
-passwordConfirmation: $passwordConfirmation
-otp: $otp
-''';
+    return "name,$name email,$email password,$password passwordConfirmation,$passwordConfirmation";
   }
 }

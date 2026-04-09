@@ -9,19 +9,14 @@ class OrderHistoryCubit extends Cubit<OrderHistoryState> {
 
   Future<void> getOrderHistory() async {
     emit(OrderHistoryLoadingState());
-
-    try {
-      var data = await OrderHistoryRepo.getOrderHistory();
-
-      if (data != null && data.status == 200) {
-        emit(OrderHistorySuccessState(orders: data.data?.orders ?? []));
-      } else {
-        emit(OrderHistoryErrorState(
-          message: data?.message ?? "Something went wrong",
-        ));
-      }
-    } catch (e) {
-      emit(OrderHistoryErrorState(message: e.toString()));
-    }
+    var response = await OrderHistoryRepo.getOrderHistory();
+    response.fold(
+      (l) {
+        emit(OrderHistoryErrorState(message: l.message));
+      },
+      (r) {
+        emit(OrderHistorySuccessState(orders: r.data?.orders ?? []));
+      },
+    );
   }
 }

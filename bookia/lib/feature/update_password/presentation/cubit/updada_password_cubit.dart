@@ -12,19 +12,14 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   }) async {
     emit(ChangePasswordLoadingState());
 
-    var data = await ChangePasswordRepo.changePassword(
+    var response = await ChangePasswordRepo.changePassword(
       currentPassword: currentPassword,
       newPassword: newPassword,
     );
 
-    if (data != null && data.status == 200) {
-      emit(ChangePasswordSuccessState());
-    } else {
-      emit(
-        ChangePasswordErrorState(
-          message: data?.message ?? "Something went wrong",
-        ),
-      );
-    }
+    response.fold(
+      (l) => emit(ChangePasswordErrorState(message: l.message)),
+      (r) => emit(ChangePasswordSuccessState()),
+    );
   }
 }

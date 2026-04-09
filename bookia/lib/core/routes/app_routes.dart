@@ -115,7 +115,6 @@ class AppRoutes {
         path: Routes.PasswordChanged,
         builder: (context, state) => const PasswordChangedScreen(),
       ),
-
     ],
   );
 }

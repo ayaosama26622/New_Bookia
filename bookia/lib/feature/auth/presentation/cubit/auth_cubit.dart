@@ -16,82 +16,87 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> login() async {
     emit(AuthLoadingState());
-
     var response = await AuthRepo.login(
-      RegisterParemeter(
+      AuthParams(
         email: emailController.text,
         password: passwordController.text,
       ),
     );
-
-    if (response != null) {
-      emit(AuthSuccessState());
-    } else {
-      emit(AuthErrorState(message: "Failed to login"));
-    }
+    response.fold(
+      (l) {
+        emit(AuthErrorState(message: l.message));
+      },
+      (r) {
+        emit(AuthSuccessState());
+      },
+    );
   }
 
   Future<void> register() async {
     emit(AuthLoadingState());
-
     var response = await AuthRepo.register(
-      RegisterParemeter(
+      AuthParams(
         name: nameController.text,
         email: emailController.text,
         password: passwordController.text,
         passwordConfirmation: confirmPasswordController.text,
       ),
     );
-
-    if (response != null) {
-      emit(AuthSuccessState());
-    } else {
-      emit(AuthErrorState(message: "Failed to register"));
-    }
+    response.fold(
+      (l) {
+        emit(AuthErrorState(message: l.message));
+      },
+      (r) {
+        emit(AuthSuccessState());
+      },
+    );
   }
 
   Future<void> forget() async {
     emit(AuthLoadingState());
-
     var response = await AuthRepo.forget(
-      RegisterParemeter(email: emailController.text),
+      AuthParams(email: emailController.text),
     );
-
-    if (response != null) {
-      emit(AuthSuccessState());
-    } else {
-      emit(AuthErrorState(message: "Failed to register"));
-    }
+    response.fold(
+      (l) {
+        emit(AuthErrorState(message: l.message));
+      },
+      (r) {
+        emit(AuthSuccessState());
+      },
+    );
   }
 
   Future<void> verifyOtp() async {
     emit(AuthLoadingState());
-
     var response = await AuthRepo.verifyOtp(
-      RegisterParemeter(otp: otpController.text),
+      AuthParams(otp: otpController.text),
     );
-
-    if (response != null) {
-      emit(AuthSuccessState());
-    } else {
-      emit(AuthErrorState(message: "Invalid OTP"));
-    }
+    response.fold(
+      (l) {
+        emit(AuthErrorState(message: l.message));
+      },
+      (r) {
+        emit(AuthSuccessState());
+      },
+    );
   }
 
   Future<void> resetPassword() async {
     emit(AuthLoadingState());
-
     var response = await AuthRepo.resetPassword(
-      RegisterParemeter(
+      AuthParams(
         password: passwordController.text,
         passwordConfirmation: confirmPasswordController.text,
       ),
     );
-
-    if (response != null) {
-      emit(AuthSuccessState());
-    } else {
-      emit(AuthErrorState(message: "Failed to reset password"));
-    }
+    response.fold(
+      (l) {
+        emit(AuthErrorState(message: l.message));
+      },
+      (r) {
+        emit(AuthSuccessState());
+      },
+    );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:bookia/feature/home/data/models/best_seller_books_respons/product.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bookia/feature/search/data/repository/search_repo.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'search_state.dart';
 
@@ -15,12 +15,12 @@ class SearchCubit extends Cubit<SearchState> {
 
     emit(SearchLoadingState());
 
-    var data = await SearchRepo.searchBooks(query);
+    var response = await SearchRepo.searchBooks(query);
 
-    if (data != null) {
-      emit(SearchSuccessState(products: data.data?.products ?? <Product>[]));
-    } else {
-      emit(SearchErrorState());
-    }
+    response.fold(
+      (l) => emit(SearchErrorState()),
+      (r) =>
+          emit(SearchSuccessState(products: r.data?.products ?? <Product>[])),
+    );
   }
 }

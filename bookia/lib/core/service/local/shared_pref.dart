@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:bookia/feature/auth/data/models/register_response/user.dart';
+import 'package:bookia/feature/auth/data/models/auth_response/user.dart';
 import 'package:bookia/feature/cart/data/models/cart_resonse/cart_item.dart';
 import 'package:bookia/feature/home/data/models/best_seller_books_respons/product.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -1,7 +1,7 @@
 import 'data.dart';
 
 class ProfileResponse {
-  UserProfile? data;
+  Data? data;
   String? message;
   List<dynamic>? error;
   int? status;
@@ -12,7 +12,7 @@ class ProfileResponse {
     return ProfileResponse(
       data: json['data'] == null
           ? null
-          : UserProfile.fromJson(json['data'] as Map<String, dynamic>),
+          : Data.fromJson(json['data'] as Map<String, dynamic>),
       message: json['message'] as String?,
       error: json['error'] as List<dynamic>?,
       status: json['status'] as int?,

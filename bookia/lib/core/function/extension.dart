@@ -8,4 +8,3 @@ extension Preferences on BuildContext {
 bool isArabic(BuildContext context) {
   return context.locale.languageCode == 'ar';
 }
-

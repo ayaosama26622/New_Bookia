@@ -6,7 +6,6 @@ import 'package:bookia/feature/profile/presentation/cubit/profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'profile_field.dart';
-
 class ProfileItem extends StatelessWidget {
   const ProfileItem({super.key});
 
@@ -30,7 +29,7 @@ class ProfileItem extends StatelessWidget {
     );
   }
 
-  Widget _buildBody(BuildContext context, UserProfile profile) {
+  Widget _buildBody(BuildContext context, Data profile) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(

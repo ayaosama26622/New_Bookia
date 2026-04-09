@@ -79,9 +79,7 @@ class LoginScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              
-                            },
+                            onTap: () {},
                             child: Text(
                               "Forgot Password?",
                               style: TextStyle(

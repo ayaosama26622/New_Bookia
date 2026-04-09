@@ -12,49 +12,61 @@ class CartCubit extends Cubit<CartState> {
 
   Future<void> getCart() async {
     emit(CartLoadingState());
-    var data = await CartRepo.getCart();
-    if (data != null) {
-      products = data.data?.cartItems ?? [];
-      total = data.data?.total ?? '';
-      SharedPref.cacheCartIds(products);
-      emit(CartSuccessState());
-    } else {
-      emit(CartErrorState());
-    }
+    var response = await CartRepo.getCart();
+    response.fold(
+      (l) {
+        emit(CartErrorState());
+      },
+      (r) {
+        products = r.data?.cartItems ?? [];
+        total = r.data?.total ?? '';
+        SharedPref.cacheCartIds(products);
+        emit(CartSuccessState());
+      },
+    );
   }
 
   Future<void> removeFromCart(int cartItemId) async {
     emit(CartLoadingState());
-    var data = await CartRepo.removeFromCart(cartItemId);
-    if (data != null) {
-      products = data.data?.cartItems ?? [];
-      total = data.data?.total ?? '';
-      SharedPref.cacheCartIds(products);
-      emit(CartSuccessState());
-    } else {
-      emit(CartErrorState());
-    }
+    var response = await CartRepo.removeFromCart(cartItemId);
+    response.fold(
+      (l) {
+        emit(CartErrorState());
+      },
+      (r) {
+        products = r.data?.cartItems ?? [];
+        total = r.data?.total ?? '';
+        SharedPref.cacheCartIds(products);
+        emit(CartSuccessState());
+      },
+    );
   }
 
   Future<void> updateCart(int cartItemId, int quantity) async {
-    var data = await CartRepo.updateCart(cartItemId, quantity);
-    if (data != null) {
-      products = data.data?.cartItems ?? [];
-      total = data.data?.total ?? '';
-      SharedPref.cacheCartIds(products);
-      emit(CartSuccessState());
-    } else {
-      emit(CartErrorState());
-    }
+    var response = await CartRepo.updateCart(cartItemId, quantity);
+    response.fold(
+      (l) {
+        emit(CartErrorState());
+      },
+      (r) {
+        products = r.data?.cartItems ?? [];
+        total = r.data?.total ?? '';
+        SharedPref.cacheCartIds(products);
+        emit(CartSuccessState());
+      },
+    );
   }
 
   Future<void> checkout() async {
     emit(CheckoutLoadingState());
-    var success = await CartRepo.checkout();
-    if (success) {
-      emit(CheckoutSuccessState());
-    } else {
-      emit(CheckoutErrorState());
-    }
+    var response = await CartRepo.checkout();
+    response.fold(
+      (l) {
+        emit(CheckoutErrorState());
+      },
+      (r) {
+        emit(CheckoutSuccessState());
+      },
+    );
   }
 }

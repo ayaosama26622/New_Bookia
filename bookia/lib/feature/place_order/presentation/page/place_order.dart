@@ -51,9 +51,9 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
             pushTo(context, Routes.congrats);
           }
           if (state is PlaceOrderErrorState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
           }
         },
         child: Scaffold(
@@ -196,18 +196,20 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
                                 if (_selectedGovernorateId == null) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                      content: Text('Please select a governorate'),
+                                      content: Text(
+                                        'Please select a governorate',
+                                      ),
                                     ),
                                   );
                                   return;
                                 }
                                 context.read<PlaceOrderCubit>().placeOrder(
-                                      governorateId: _selectedGovernorateId!,
-                                      name: _fullNameController.text,
-                                      phone: _phoneController.text,
-                                      address: _addressController.text,
-                                      email: _emailController.text,
-                                    );
+                                  governorateId: _selectedGovernorateId!,
+                                  name: _fullNameController.text,
+                                  phone: _phoneController.text,
+                                  address: _addressController.text,
+                                  email: _emailController.text,
+                                );
                               }
                             },
                       text: state is PlaceOrderLoadingState

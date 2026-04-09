@@ -53,9 +53,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             pushTo(context, Routes.congrats);
           }
           if (state is UpdateProfileErrorState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
           }
         },
         child: Scaffold(
@@ -89,7 +89,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               ? FileImage(_selectedImage!)
                               : null,
                           child: _selectedImage == null
-                              ? const Icon(Icons.person, size: 50, color: Colors.white)
+                              ? const Icon(
+                                  Icons.person,
+                                  size: 50,
+                                  color: Colors.white,
+                                )
                               : null,
                         ),
                         CircleAvatar(
@@ -159,10 +163,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ? () {}
                       : () {
                           context.read<UpdateProfileCubit>().updateProfile(
-                                name: _fullNameController.text,
-                                phone: _phoneController.text,
-                                address: _emailController.text,
-                              );
+                            name: _fullNameController.text,
+                            phone: _phoneController.text,
+                            address: _emailController.text,
+                          );
                         },
                   text: state is UpdateProfileLoadingState
                       ? 'Loading...'

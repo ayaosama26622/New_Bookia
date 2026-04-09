@@ -13,8 +13,8 @@ class OrderHistoryResponse {
       data: json['data'] is List
           ? Data(orders: [])
           : json['data'] == null
-              ? null
-              : Data.fromJson(json['data'] as Map<String, dynamic>),
+          ? null
+          : Data.fromJson(json['data'] as Map<String, dynamic>),
       message: json['message'] as String?,
       error: json['error'] as List<dynamic>?,
       status: json['status'] as int?,
