@@ -63,15 +63,19 @@ abstract class DioProvider {
 
   static Either<Failure, dynamic> _handleResponse(Response<dynamic> response) {
     var json = response.data as Map<String, dynamic>;
-    if (json.containsKey('data')) {
-      try {
-        var baseResponse = BaseReponse.fromJson(response.data);
-        return Right(baseResponse.data);
-      } on Exception catch (e) {
-        return Left(ParseFailure(message: e.toString()));
+    try {
+      var baseResponse = BaseReponse.fromJson(json);
+      if (baseResponse.status != null &&
+          baseResponse.status != 200 &&
+          baseResponse.status != 201) {
+        return Left(ApiFailure(
+          message: baseResponse.message ?? 'Something went wrong',
+          statusCode: baseResponse.status,
+        ));
       }
-    } else {
-      return Right(response.data);
+      return Right(baseResponse.data);
+    } on Exception catch (e) {
+      return Left(ParseFailure(message: e.toString()));
     }
   }
 
@@ -85,22 +89,18 @@ abstract class DioProvider {
           message: 'No internet connection',
           statusCode: e.response?.statusCode,
         );
-
       case DioExceptionType.badResponse:
         return ApiFailure(message: e.response?.data['message']);
-
       case DioExceptionType.cancel:
         return ApiFailure(
           message: 'Request was cancelled',
           statusCode: e.response?.statusCode,
         );
-
       case DioExceptionType.unknown:
         return UnknownFailure(
           message: 'Something went wrong',
           statusCode: e.response?.statusCode,
         );
-
       default:
         return UnknownFailure(
           message: 'Something went wrong',

@@ -1,4 +1,5 @@
 import 'package:bookia/core/constants/image_app.dart';
+import 'package:bookia/core/di/service_locator.dart';
 import 'package:bookia/core/function/navigation.dart';
 import 'package:bookia/core/function/validation.dart';
 import 'package:bookia/core/routes/routes.dart';
@@ -9,6 +10,11 @@ import 'package:bookia/core/widgets/custom_text_from_field.dart';
 import 'package:bookia/core/widgets/dialoge.dart';
 import 'package:bookia/core/widgets/main_button.dart';
 import 'package:bookia/core/widgets/password_from_field.dart';
+import 'package:bookia/feature/auth/domain/usecases/forget_password_usecase.dart';
+import 'package:bookia/feature/auth/domain/usecases/login_usecase.dart';
+import 'package:bookia/feature/auth/domain/usecases/register_usecase.dart';
+import 'package:bookia/feature/auth/domain/usecases/resete_password_usecase.dart';
+import 'package:bookia/feature/auth/domain/usecases/verify_otp_usecase.dart';
 import 'package:bookia/feature/auth/presentation/cubit/auth_cubit.dart';
 import 'package:bookia/feature/auth/presentation/cubit/auth_state.dart';
 import 'package:bookia/feature/auth/presentation/widgets/sociallogin.dart';
@@ -22,7 +28,14 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthCubit(),
+      create: (context) => 
+      AuthCubit(
+            loginUseCase: getIt<LoginUseCase>(),
+            registerUseCase: getIt<RegisterUseCase>(),
+            forgetPasswordUseCase: getIt<ForgetPasswordUseCase>(),
+            verifyOtpUseCase: getIt<VerifyOtpUseCase>(),
+            resetPasswordUseCase: getIt<ResetPasswordUseCase>(),
+          ),
       child: Scaffold(
         appBar: AppBar(
           centerTitle: false,
